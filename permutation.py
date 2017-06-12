@@ -5,7 +5,6 @@ def permutation(elements):
         for perm in permutation(elements[1:]):
             # print 'perm:'+ str(perm)
             for i in range(len(elements)):
-                print perm[:i] + elements[0:1] + perm[i:]
                 yield perm[:i] + elements[0:1] + perm[i:]
 
 if __name__ == "__main__":
