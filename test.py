@@ -1,32 +1,20 @@
 class Solution(object):
-    def solveEquation(self, equation):
+    def printTree(self, root):
         """
-        :type equation: str
-        :rtype: str
+        :type root: TreeNode
+        :rtype: List[List[str]]
         """
-        ones = equation.split('=')[0]
-        twos = equation.split('=')[1]
-        lx, ln = self.parse(ones)
-        rx, rn = self.parse(twos)
-        print self.parse(ones)
-        print self.parse(twos)
-        lx -= rx
-        rn -= ln
-        if lx == 0 and rn == 0: return 'Infinite solutions'
-        if lx == 0 and rn !=0: return 'No solution'
-        return 'x='+str(rn/lx)
-    def parse(self, st):
-        x , n = 0, 0
-        sig = ['-', '+', '#']
-        si = 0
-        st = st+'#'
-        for i in range(1,len(st)):
-            if st[i] in sig:
-                if st[i-1] == 'x':
-                    x += int((st[si:i-1] if st[si:i-1] not in sig else st[si:i-1]+'1' )or '1')
-                else:
-                    n += int(st[si:i] or '1')
-                si = i
-        return x,n
-an = Solution()
-print an.solveEquation("-x=1")
+        self.hight = self.findDepth(root)
+        self.width = (1 << self.hight) - 1
+        self.dmap = [[""] * self.width for i in range(self.hight)]
+        self.traverse(root, 1, self.width >> 1)
+        return self.dmap
+        def findDepth(self, root):
+            if not root: return 0
+            return 1 + max(self.findDepth(root.left), self.findDepth(root.right))
+        def traverse(self, root, depth, offset):
+            if not root: return
+            self.dmap[depth-1][offset] = str(root.val)
+            gap = 1+ self.width >> depth + 1
+            self.traverse(root.left, depth+1, offset - gap)
+            self.traverse(root.right, depth+1, offset + gap)
