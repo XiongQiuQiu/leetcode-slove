@@ -1,20 +1,25 @@
-class Solution(object):
-    def printTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[str]]
-        """
-        self.hight = self.findDepth(root)
-        self.width = (1 << self.hight) - 1
-        self.dmap = [[""] * self.width for i in range(self.hight)]
-        self.traverse(root, 1, self.width >> 1)
-        return self.dmap
-        def findDepth(self, root):
-            if not root: return 0
-            return 1 + max(self.findDepth(root.left), self.findDepth(root.right))
-        def traverse(self, root, depth, offset):
-            if not root: return
-            self.dmap[depth-1][offset] = str(root.val)
-            gap = 1+ self.width >> depth + 1
-            self.traverse(root.left, depth+1, offset - gap)
-            self.traverse(root.right, depth+1, offset + gap)
+def singleNumber(nums):
+    """
+    :type nums: List[int]
+    :rtype: List[int]
+    """
+    xor = reduce(lambda x, y: x ^ y, nums)
+    print 'xor',xor
+    lowbit = xor & -xor
+    print 'lowbit', lowbit
+    a = b = 0
+    for num in nums:
+        print '&', num & lowbit
+        if num & lowbit:
+            a ^= num
+            print 'a',a
+        else:
+            b ^= num
+            print 'b', b
+    return [a, b]
+nums=[1, 2, 1, 3, 2, 5]
+print singleNumber(nums)
+print '---------'
+nums=[1, 2, 1, 3, 2, 5]
+for i in nums:
+    print i & 2
