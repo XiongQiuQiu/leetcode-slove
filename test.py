@@ -16,6 +16,7 @@ def singleNumber(nums):
         else:
             b ^= num
             print 'b', b
+        print '------------'
     return [a, b]
 nums=[1, 2, 1, 3, 2, 5]
 print singleNumber(nums)
