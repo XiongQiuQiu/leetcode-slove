@@ -1,26 +1,5 @@
-def singleNumber(nums):
-    """
-    :type nums: List[int]
-    :rtype: List[int]
-    """
-    xor = reduce(lambda x, y: x ^ y, nums)
-    print 'xor',xor
-    lowbit = xor & -xor
-    print 'lowbit', lowbit
-    a = b = 0
-    for num in nums:
-        print '&', num & lowbit
-        if num & lowbit:
-            a ^= num
-            print 'a',a
-        else:
-            b ^= num
-            print 'b', b
-        print '------------'
-    return [a, b]
-nums=[1, 2, 1, 3, 2, 5]
-print singleNumber(nums)
-print '---------'
-nums=[1, 2, 1, 3, 2, 5]
-for i in nums:
-    print i & 2
+metro_data = [('Tokyo', 'JP', 36.933, (35.689722, 139.691667)),
+              ('Delhi NCR', 'IN', 21.935, (28.613889, 77.208889)),
+              ('Mexico City', 'MX', 20.142, (19.433333, -99.133333)),
+              ('New York-Newark', 'US', 20.104, (40.808611, -74.020386),
+              ('Sao Paulo', 'BR', 19.649, (-23.547778, -46.635833)),]
