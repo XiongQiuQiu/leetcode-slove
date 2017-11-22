@@ -35,6 +35,9 @@ class Solution(object):
         num = self.initans(l, k)
         ans = []
         for one in num:
+            if one is 0:
+                ans.append(None)
+                continue
             node = root
             for i in range(one-1):
                 node = node.next
