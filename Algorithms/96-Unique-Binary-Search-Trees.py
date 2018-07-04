@@ -29,3 +29,5 @@ class Solution(object):
             for j in xrange(i):
                 dp[i] += dp[j] * dp[i - 1 - j]
         return dp[n]
+def numTrees(self, n):
+    return math.factorial(2*n)/(math.factorial(n)*math.factorial(n+1))
