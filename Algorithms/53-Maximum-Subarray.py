@@ -15,8 +15,8 @@ If you have figured out the O(n) solution, try coding another solution using the
 '''
 def maxSubArray(self, nums):
     for i in range(1, len(nums)):
-            if nums[i-1] > 0:
-                nums[i] += nums[i-1]
+        if nums[i-1] > 0:
+            nums[i] += nums[i-1]
         return max(nums)
 
 class Solution(object):
