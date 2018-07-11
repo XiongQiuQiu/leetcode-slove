@@ -1,21 +1,19 @@
-def combinationSum(candidates, target):
+import collections
+def numberOfArithmeticSlices(A):
     """
-    :type candidates: List[int]
-    :type target: int
-    :rtype: List[List[int]]
+    :type A: List[int]
+    :rtype: int
     """
-    res = []
-    candidates.sort()
-    dfs(candidates, target, 0, [], res)
-    return res
+    size = len(A)
+    ans = 0
+    dp = [collections.defaultdict(int) for x in range(size)]
+    for x in range(size):
+        for y in range(x):
+            delta = A[x] - A[y]
+            dp[x][delta] += 1
+            if delta in dp[y]:
+                dp[x][delta] += dp[y][delta]
+                ans += dp[y][delta]
+    return ans
 
-
-def dfs(nums, target, index, path, res):
-    if target < 0:
-        return
-    if target == 0:
-        res.append(path)
-        return
-    for i in range(index, len(nums)):
-        dfs(nums, target - nums[i], i, path + [nums[i]], res)
-combinationSum([2,3,6,7],7)
+numberOfArithmeticSlices([2, 4, 6, 8, 10])
