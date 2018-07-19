@@ -1,19 +1,23 @@
-import collections
-def numberOfArithmeticSlices(A):
-    """
-    :type A: List[int]
-    :rtype: int
-    """
-    size = len(A)
-    ans = 0
-    dp = [collections.defaultdict(int) for x in range(size)]
-    for x in range(size):
-        for y in range(x):
-            delta = A[x] - A[y]
-            dp[x][delta] += 1
-            if delta in dp[y]:
-                dp[x][delta] += dp[y][delta]
-                ans += dp[y][delta]
-    return ans
 
-numberOfArithmeticSlices([2, 4, 6, 8, 10])
+def sortColors(nums):
+    """
+    :type nums: List[int]
+    :rtype: void Do not return anything, modify nums in-place instead.
+    """
+    size = len(nums)
+    i = -1
+    end = size
+    while i < end:
+        i += 1
+        if nums[i] == 0:
+            del nums[i]
+            nums.insert(0, 0)
+        if nums[i] == 2:
+            del nums[i]
+            nums.insert(size, 2)
+            i -= 1
+            end -=1
+        print(nums)
+
+
+sortColors([2,0,2,1,1,0])
