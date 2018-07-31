@@ -56,4 +56,30 @@ class Solution(object):
 
         return robdfs(root)[1]
 
+    # Definition for a binary tree node.
+    # class TreeNode(object):
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+
+    class Solution(object):
+        def rob(self, root):
+            """
+            :type root: TreeNode
+            :rtype: int
+            """
+            if not root:
+                return 0
+
+            res, _ = self._rob(root)
+            return res
+
+        def _rob(self, n):
+            if not n:
+                return 0, 0
+            leftMax, leftSubTree = self._rob(n.left)
+            rightMax, rightSubTree = self._rob(n.right)
+            return max(n.val + leftSubTree + rightSubTree, leftMax + rightMax), leftMax + rightMax
+
 
