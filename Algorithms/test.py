@@ -1,34 +1,50 @@
-def dpMakeChange(coinValueList,change,minCoins,coinsUsed):
-   for cents in range(change+1):
-      coinCount = cents
-      newCoin = 1
-      for j in [c for c in coinValueList if c <= cents]:
-            if minCoins[cents-j] + 1 < coinCount:
-               coinCount = minCoins[cents-j]+1
-               newCoin = j
-      minCoins[cents] = coinCount
-      coinsUsed[cents] = newCoin
-   print minCoins
-   return minCoins[change]
+'''
+Given two arrays of length m and n with digits 0-9 representing two numbers. Create the maximum number of length k <= m + n from digits of the two. The relative order of the digits from the same array must be preserved. Return an array of the k digits.
 
-def printCoins(coinsUsed,change):
-   coin = change
-   while coin > 0:
-      thisCoin = coinsUsed[coin]
-      print(thisCoin)
-      coin = coin - thisCoin
+Note: You should try to optimize your time and space complexity.
 
-def main():
-    amnt = 63
-    clist = [1,5,10,21,25]
-    coinsUsed = [0]*(amnt+1)
-    coinCount = [0]*(amnt+1)
+Example 1:
 
-    print("Making change for",amnt,"requires")
-    print(dpMakeChange(clist,amnt,coinCount,coinsUsed),"coins")
-    print("They are:")
-    printCoins(coinsUsed,amnt)
-    print("The used list is as follows:")
-    print(coinsUsed)
+Input:
+nums1 = [3, 4, 6, 5]
+nums2 = [9, 1, 2, 5, 8, 3]
+k = 5
+Output:
+[9, 8, 6, 5, 3]
+Example 2:
 
-main()
+Input:
+nums1 = [6, 7]
+nums2 = [6, 0, 4]
+k = 5
+Output:
+[6, 7, 6, 0, 4]
+Example 3:
+
+Input:
+nums1 = [3, 9]
+nums2 = [8, 9]
+k = 3
+Output:
+[9, 8, 9]
+'''
+
+def maxNumber(nums1, nums2, k):
+
+    def prep(nums, k):
+        drop = len(nums) - k
+        out = []
+        for num in nums:
+            while drop and out and out[-1] < num:
+                out.pop()
+                drop -= 1
+            out.append(num)
+        return out[:k]
+
+    def merge(a, b):
+        return [max(a, b).pop(0) for _ in a+b]
+
+    return max(merge(prep(nums1, i), prep(nums2, k-i))
+               for i in range(k+1)
+               if i <= len(nums1) and k-i <= len(nums2))
+print maxNumber([3,4,6,5],[9,1,2,5,8,3],5)
