@@ -1,9 +1,15 @@
-def maxProduct(nums):
-    maximum=big=small=nums[0]
-    for n in nums[1:]:
-        big, small=max(n, n*big, n*small), min(n, n*big, n*small)
-        maximum=max(maximum, big)
-    return maximum
+def isValid(s):
+    """
+    :type s: str
+    :rtype: bool
+    """
+    sd = {'(': ')', '[': ']', '{': '}'}
+    stack = []
+    for symbol in s:
+        if symbol in sd:
+            stack.append(symbol)
+        elif sd[stack.pop()] != symbol:
+            return False
+    return True
 
-maxProduct([-2,3,-2,-4])
-# maxProduct([2,3,-2,4])
+isValid('(]')
