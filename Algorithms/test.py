@@ -1,19 +1,38 @@
-def minimumDeleteSum(s1, s2):
-    """
-    :type s1: str
-    :type s2: str
-    :rtype: int
-    """
-    l1, l2 = len(s1), len(s2)
-    dp = [[0] * (l2 + 1) for _ in range(l1 + 1)]
-    for j in range(1, l2 + 1):
-        dp[0][j] = dp[0][j - 1] + ord(s2[j - 1])
-    for i in range(1, l1 + 1):
-        dp[i][0] = dp[i - 1][0] + ord(s1[i - 1])
-        for j in range(1, l2 + 1):
-            if s1[i - 1] == s2[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1]
-            else:
-                dp[i][j] = min(dp[i - 1][j] + ord(s1[i - 1]), dp[i][j - 1] + ord(s2[j - 1]))
+# -*- coding:utf-8 -*-
+import numpy
+def find_lcseque(s1, s2):
+    # 生成字符串长度加1的0矩阵，m用来保存对应位置匹配的结果
+    m = [[0 for x in range(len(s2) + 1)] for y in range(len(s1) + 1)]
+    # d用来记录转移方向
+    d = [[None for x in range(len(s2) + 1)] for y in range(len(s1) + 1)]
 
-    return dp[l1][l2]
+    for p1 in range(len(s1)):
+        for p2 in range(len(s2)):
+            if s1[p1] == s2[p2]:  # 字符匹配成功，则该位置的值为左上方的值加1
+                m[p1 + 1][p2 + 1] = m[p1][p2] + 1
+                d[p1 + 1][p2 + 1] = 'ok'
+            elif m[p1 + 1][p2] > m[p1][p2 + 1]:  # 左值大于上值，则该位置的值为左值，并标记回溯时的方向
+                m[p1 + 1][p2 + 1] = m[p1 + 1][p2]
+                d[p1 + 1][p2 + 1] = 'left'
+            else:  # 上值大于左值，则该位置的值为上值，并标记方向up
+                m[p1 + 1][p2 + 1] = m[p1][p2 + 1]
+                d[p1 + 1][p2 + 1] = 'up'
+    (p1, p2) = (len(s1), len(s2))
+    print numpy.array(d)
+    print numpy.array(m)
+    s = []
+    while m[p1][p2]:  # 不为None时
+        c = d[p1][p2]
+        if c == 'ok':  # 匹配成功，插入该字符，并向左上角找下一个
+            s.append(s1[p1 - 1])
+            p1 -= 1
+            p2 -= 1
+        if c == 'left':  # 根据标记，向左找下一个
+            p2 -= 1
+        if c == 'up':  # 根据标记，向上找下一个
+            p1 -= 1
+    s.reverse()
+    return ''.join(s)
+
+
+print find_lcseque('abdfge', 'abcdfg')
