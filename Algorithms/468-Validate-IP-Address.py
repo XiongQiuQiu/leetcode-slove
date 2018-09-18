@@ -51,7 +51,7 @@ class Solution(object):
         for part in parts:
             if not part: return False
             if not part.isdigit(): return False
-            if part[0] == '0': return False
+            if part[0] == '0' and len(part) > 1: return False
             if int(part) > 255: return False
         return True
 
@@ -63,3 +63,4 @@ class Solution(object):
             if len(part) > 4: return False
             if any(c not in string.hexdigits for c in part): return False
         return True
+
