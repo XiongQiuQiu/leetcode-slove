@@ -1,15 +1,14 @@
+def largestRectangleArea(self, height):
+    height.append(0)
+    stack = [-1]
+    ans = 0
+    for i in xrange(len(height)):
+        while height[i] < height[stack[-1]]:
+            h = height[stack.pop()]
+            w = i - stack[-1] - 1
+            ans = max(ans, h * w)
+        stack.append(i)
+    height.pop()
+    return ans
 
-def generateParenthesis(n):
-    """
-    :type n: int
-    :rtype: List[str]
-    """
-
-    def generate(p, left, right, parenths=[]):
-        if left: generate(p + '(', left - 1, right)
-        if right > left: generate(p + ')', left, right - 1)
-        if not right: parenths += p,
-        return parenths
-
-    return generate('', n, n)
-generateParenthesis(3)
+largestRectangleArea(1,[2,1,5,6,2,3])
