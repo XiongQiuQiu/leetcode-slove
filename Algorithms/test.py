@@ -1,19 +1,14 @@
-import collections
-def numberOfArithmeticSlices(A):
-    """
-    :type A: List[int]
-    :rtype: int
-    """
-    size = len(A)
+def largestRectangleArea(self, height):
+    height.append(0)
+    stack = [-1]
     ans = 0
-    dp = [collections.defaultdict(int) for x in range(size)]
-    for x in range(size):
-        for y in range(x):
-            delta = A[x] - A[y]
-            dp[x][delta] += 1
-            if delta in dp[y]:
-                dp[x][delta] += dp[y][delta]
-                ans += dp[y][delta]
+    for i in xrange(len(height)):
+        while height[i] < height[stack[-1]]:
+            h = height[stack.pop()]
+            w = i - stack[-1] - 1
+            ans = max(ans, h * w)
+        stack.append(i)
+    height.pop()
     return ans
 
-numberOfArithmeticSlices([2, 4, 6, 8, 10])
+largestRectangleArea(1,[2,1,5,6,2,3])

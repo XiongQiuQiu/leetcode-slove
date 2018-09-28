@@ -7,6 +7,15 @@ def permutation(elements):
             for i in range(len(elements)):
                 yield perm[:i] + elements[0:1] + perm[i:]
 
+def perm(s=''):
+    if len(s) <= 1:
+        return [s]
+    sl = []
+    for i in range(len(s)):
+        for j in perm(s[0:i] + s[i + 1:]):
+            sl.append(s[i] + j)
+    return sl
+
 if __name__ == "__main__":
     s='Diei'
     for item in list(permutation(list(s))):
