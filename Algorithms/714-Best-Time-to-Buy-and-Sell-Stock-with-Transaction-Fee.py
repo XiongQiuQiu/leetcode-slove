@@ -20,3 +20,31 @@ Note:
 0 < prices[i] < 50000.
 0 <= fee < 50000.
 '''
+class Solution(object):
+    def maxProfit(self, prices, fee):
+        """
+        :type prices: List[int]
+        :type fee: int
+        :rtype: int
+        """
+        dp = [ [0,0] for _ in range(len(prices)) ]
+        dp[0][0] = 0
+        dp[0][1] = -prices[0]
+        for i in range(1,len(prices)):
+            dp[i][1] = max(dp[i-1][0]-prices[i],dp[i-1][1])
+            dp[i][0] = max(dp[i-1][1] + prices[i]-fee,dp[i-1][0])
+        return dp[-1][0]
+
+
+class Solution(object):
+    def maxProfit(self, prices, fee):
+        """
+        :type prices: List[int]
+        :type fee: int
+        :rtype: int
+        """
+        hold, sell = -prices[0], 0
+        for p in prices:
+            hold = max(sell - p, hold)
+            sell = max(hold + p - fee, sell)
+        return sell
