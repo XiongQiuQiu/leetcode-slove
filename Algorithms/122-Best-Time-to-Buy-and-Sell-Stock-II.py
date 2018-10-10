@@ -30,8 +30,33 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        hold,sell = -float('inf'),0
+        hold,sell,cool = -float('inf'),0,-float('inf')
         for p in prices:
-            hold = max(sell-p,hold)
-            sell = max(hold+p,sell)
+            prehold = hold
+            hold=max(hold,sell-p)
+            sell=max(sell,cool)
+            cool=prehold+p
+        return max(sell,cool)
+
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices) < 2:
+            return 0
+
+        sell = 0
+        buy = -sys.maxsize - 1
+        prev_sell = 0
+        prev_buy = -sys.maxsize - 1
+
+        for price in prices:
+            prev_buy = buy
+            buy = max(buy, prev_sell - price)
+            prev_sell = sell
+            sell = max(sell, prev_buy + price)
+
         return sell
