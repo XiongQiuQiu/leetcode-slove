@@ -1,14 +1,14 @@
-def largestRectangleArea(self, height):
-    height.append(0)
-    stack = [-1]
-    ans = 0
-    for i in xrange(len(height)):
-        while height[i] < height[stack[-1]]:
-            h = height[stack.pop()]
-            w = i - stack[-1] - 1
-            ans = max(ans, h * w)
-        stack.append(i)
-    height.pop()
-    return ans
+def maxProfit(prices, fee):
+    """
+    :type prices: List[int]
+    :type fee: int
+    :rtype: int
+    """
+    hold, sell = -float('inf'), 0
+    for p in prices:
+        hold = max(hold, sell - p - fee)
+        sell = max(sell, hold + p)
+    return sell
 
-largestRectangleArea(1,[2,1,5,6,2,3])
+print(maxProfit([1, 3, 2, 8, 4, 9],2))
+

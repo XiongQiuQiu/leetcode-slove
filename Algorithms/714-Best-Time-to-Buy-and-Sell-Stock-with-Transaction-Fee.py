@@ -20,6 +20,7 @@ Note:
 0 < prices[i] < 50000.
 0 <= fee < 50000.
 '''
+
 class Solution(object):
     def maxProfit(self, prices, fee):
         """
@@ -36,6 +37,7 @@ class Solution(object):
         return dp[-1][0]
 
 
+
 class Solution(object):
     def maxProfit(self, prices, fee):
         """
@@ -43,8 +45,22 @@ class Solution(object):
         :type fee: int
         :rtype: int
         """
+
+        stack = [[50000, 0]]
+        for price in prices:
+            if not stack[-1][1] and price <= stack[-1][0]:
+                stack[-1][0] = price
+            elif price >= max(stack[-1][0] + fee, stack[-1][1]):
+                stack[-1][1] = price
+            elif stack[-1][1]:
+                stack.append([price, 0])
+            while len(stack) > 1 and stack[-2][1] < stack[-1][0] + fee:
+                stack[-1][1] = max(stack.pop()[1], stack[-1][1])
+        return sum(t[1] - t[0] - fee for t in stack if t[1] - t[0] > fee)
+
         hold, sell = -prices[0], 0
         for p in prices:
             hold = max(sell - p, hold)
             sell = max(hold + p - fee, sell)
         return sell
+
