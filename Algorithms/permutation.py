@@ -21,3 +21,4 @@ if __name__ == "__main__":
     for item in list(permutation(list(s))):
         pass
         # print ''.join(item)
+    print perm(s)
