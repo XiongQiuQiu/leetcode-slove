@@ -1,18 +1,22 @@
-def uniquePathsWithObstacles1(obstacleGrid):
-    if not obstacleGrid:
-        return 
-    r, c = len(obstacleGrid), len(obstacleGrid[0])
-    dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
-    dp[0][0] = 1 - obstacleGrid[0][0]
-    for i in xrange(1, r):
-        dp[i][0] = dp[i-1][0] * (1 - obstacleGrid[i][0])
-    print dp
-    for i in xrange(1, c):
-        dp[0][i] = dp[0][i-1] * (1 - obstacleGrid[0][i])
-    print dp
-    for i in xrange(1, r):
-        for j in xrange(1, c):
-            dp[i][j] = (dp[i][j-1] + dp[i-1][j]) * (1 - obstacleGrid[i][j])
-    return dp[-1][-1]
+def calculateMinimumH(dungeon):
+    """
+    :type dungeon: List[List[int]]
+    :rtype: int
+    """
+    c = len(dungeon[0])
+    dp = [float('inf')] * (c-1) + [1]
+    for row in dungeon[::-1]:
+        for col in range(c)[::-1]:
+            dp[col] = max(min(dp[col:col+2])-row[col],1)
+    return dp[0]
 
-uniquePathsWithObstacles1([[0,0,0],[0,1,0],[0,0,0]])
+def calculateMinimumHP(dungeon):
+    n = len(dungeon[0])
+    need = [2**31] * (n-1) + [1]
+    for row in dungeon[::-1]:
+        for j in range(n)[::-1]:
+            # print need[j]
+            # print need[j+1]
+            need[j] = max(min(need[j:j+2]) - row[j], 1)
+    return need[0]
+print calculateMinimumHP([[-2,-3,3],[-5,-10,1],[10,30,-5]])
