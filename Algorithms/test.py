@@ -1,12 +1,16 @@
-def removeDuplicates(A):
-    if not A:
-        return 0
-
-    newTail = 0
-
-    for i in range(1, len(A)):
-        if A[i] != A[newTail]:
-            newTail += 1
-            A[newTail] = A[i]
-
-    return newTail + 1
+def solveNQueens(n):
+    """
+    :type n: int
+    :rtype: List[List[str]]
+    """
+    ans = []
+    def DFS(queens, xy_dif, xy_sum):
+        p = len(queens)
+        if p == n:
+            ans.append(queens)
+        for q in range(n):
+            if q not in queens and p -q not in xy_dif and p+q not in xy_sum:
+                DFS(queens+[q],xy_dif+[p-q],xy_sum+[q+p])
+    DFS([], [], [])
+    return [['.'*i + 'Q'+'.'*(n-i-1)for i in queen] for queen in ans]
+print solveNQueens(4)
