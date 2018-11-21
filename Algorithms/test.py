@@ -1,24 +1,17 @@
-def rotateRight(self,k):
+def numDistinct(s, t):
     """
-    :type head: ListNode
-    :type k: int
-    :rtype: ListNode
+    :type s: str
+    :type t: str
+    :rtype: int
     """
-    l = 1 if head else 0
-    while head and head.next:
-        head = head.next
-        l + 1
-    dummpy = ListNode(None)
-    dummpy.next = head
-    cur = head
-    end = 1
-    while cur and cur.next:
-        if end == l - k:
-            new_start = cur.next
-            while new_start and new_start.next:
-                new_start = new_start.next
-            new_start.next = cur
-            dummpy.next = new_start
-            return dummpy.next
-        cur = cur.next
-        end += 1
+    dp = [[1 if j == 0 else 0 for i in range(len(s) + 1)] for j in range(len(t) + 1)]
+    for i in range(1, len(dp)):
+        for j in range(1, len(dp[0])):
+            if s[j - 1] == t[i - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1]
+            else:
+                dp[i][j] = dp[i][j - 1]
+    return dp[-1][-1]
+s = "rabbbit"
+t = "rabbit"
+numDistinct(s,t)
