@@ -1,17 +1,18 @@
-def numDistinct(s, t):
+def reverseVowels(self, s):
     """
     :type s: str
-    :type t: str
-    :rtype: int
+    :rtype: str
     """
-    dp = [[1 if j == 0 else 0 for i in range(len(s) + 1)] for j in range(len(t) + 1)]
-    for i in range(1, len(dp)):
-        for j in range(1, len(dp[0])):
-            if s[j - 1] == t[i - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1]
-            else:
-                dp[i][j] = dp[i][j - 1]
-    return dp[-1][-1]
-s = "rabbbit"
-t = "rabbit"
-numDistinct(s,t)
+    vowel = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
+    ans = list(s)
+    i, j = 0, len(s) - 1
+    while i <= j:
+        if ans[i] not in vowel:
+            i += 1
+        if ans[j] not in vowel:
+            j -= 1
+        if ans[i] in vowel and ans[j] in vowel:
+            ans[i], ans[j] = ans[j], ans[i]
+    return ''.join(ans)
+
+reverseVowels(1,"hello")

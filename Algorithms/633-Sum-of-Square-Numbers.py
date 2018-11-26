@@ -23,3 +23,15 @@ class Solution(object):
             if int(math.sqrt(b)) ** 2 + i ** 2 == c: return True
         return False
 
+def slove(self,c):
+    i=0
+    j=math.sqrt(c)
+    while i<=j:
+        powsum =i**2 + j**2
+        if c ==powsum:
+            return True
+        elif powsum < c:
+            i +=1
+        else:
+            j -=1
+    return False
