@@ -41,3 +41,13 @@ class Solution(object):
         if not ans: return ''
         maxl = len(max(ans,key=len))
         return min(w for w in ans if len(w) == maxl)
+def findLongestWord(self, S, D):
+    D.sort(key = lambda x: (-len(x), x))
+    for word in D:
+        i = 0
+        for c in S:
+            if i < len(word) and word[i] == c:
+                i += 1
+        if i == len(word):
+            return word
+    return ""
