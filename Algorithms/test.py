@@ -1,9 +1,36 @@
-import tensorflow as tf
-with tf.device('/gpu:2'):
-    a = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[2, 3], name='a')
-    b = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[3, 2], name='b')
-    c = tf.matmul(a, b)
-# Creates a session with log_device_placement set to True.
-    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
-# Runs the op.
-print sess.run(c)
+
+
+def findCircleNum(M):
+    """
+    :type M: List[List[int]]
+    :rtype: int
+    """
+    cnt = 0
+    for r in range(len(M)):
+        for c in range(len(M[0])) :
+            print r,c
+            if M[r][c] == 1:
+                cnt += one(M,(r,c))
+    return cnt
+
+def one(M,point):
+    dy = [0,1,0,-1]
+    dx = [1,0,-1,0]
+    queue = [point]
+    M[point[0]][point[1]] = 0
+    while queue:
+        x,y = queue.pop()
+        for tx,ty in zip(dx,dy):
+            nx = x+tx
+            ny = y+ty
+            if 0 <= nx<len(M) and 0 <= ny < len(M[0]):
+                if M[nx][ny] == 1:
+                    M[nx][ny] = 0
+                    queue.append((nx,ny))
+    return 1
+
+findCircleNum([[1,1,0],[1,1,0],[0,0,1]])
+[[1,0,0,1],
+ [0,1,1,0],
+ [0,1,1,1],
+ [1,0,1,1]]
