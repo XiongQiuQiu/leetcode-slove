@@ -1,36 +1,37 @@
 
-
-def findCircleNum(M):
+def exist(board, word):
     """
-    :type M: List[List[int]]
-    :rtype: int
+    :type board: List[List[str]]
+    :type word: str
+    :rtype: bool
     """
-    cnt = 0
-    for r in range(len(M)):
-        for c in range(len(M[0])) :
-            print r,c
-            if M[r][c] == 1:
-                cnt += one(M,(r,c))
-    return cnt
+    cl = len(board)
+    rl = len(board[0]) if cl else 0
+    for c in range(cl):
+        for r in range(rl):
+            if board[c][r] == word[0]:
+                if len(word) == 1: return True
+                if helper(board, (c, r,1), word, cl, rl):
+                    return True
+    return False
 
-def one(M,point):
-    dy = [0,1,0,-1]
-    dx = [1,0,-1,0]
+def helper( board, point, word, cl, rl):
+    dz = zip((0, 1, 0, -1), (-1, 0, 1, 0))
     queue = [point]
-    M[point[0]][point[1]] = 0
+    vset = {point[:2]}
     while queue:
-        x,y = queue.pop()
-        for tx,ty in zip(dx,dy):
-            nx = x+tx
-            ny = y+ty
-            if 0 <= nx<len(M) and 0 <= ny < len(M[0]):
-                if M[nx][ny] == 1:
-                    M[nx][ny] = 0
-                    queue.append((nx,ny))
-    return 1
+        x, y, i = queue.pop()
+        for dx, dy in dz:
+            nx, ny = dx + x, dy + y
+            if 0 <= nx < cl and 0 <= ny < rl and (nx, ny) not in vset:
+                if board[nx][ny] == word[i]:
+                    if i == len(word) - 1:
+                        return True
+                    queue.append((nx, ny, i + 1))
+                    vset.add((nx, ny))
 
-findCircleNum([[1,1,0],[1,1,0],[0,0,1]])
-[[1,0,0,1],
- [0,1,1,0],
- [0,1,1,1],
- [1,0,1,1]]
+    return False
+
+
+exist([["A","B","C","E"],["S","F","E","S"],["A","D","E","E"]],
+"ABCESEEEFS")
