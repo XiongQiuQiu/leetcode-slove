@@ -25,7 +25,6 @@ class Solution(object):
         def dfs(nums):
             if len(nums) <= 1: return [nums]
             ans = []
-
             for num in range(len(nums)):
                 for i in dfs(nums[:num]+nums[num+1:]):
                     ans.append([nums[num]]+i)
