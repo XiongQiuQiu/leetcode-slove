@@ -1,19 +1,22 @@
-def solveNQueens( n):
+def numDecodings(s):
     """
-    :type n: int
-    :rtype: List[List[str]]
+    :type s: str
+    :rtype: int
     """
     ans = []
 
-    def DFS(queens, xy_dif, xy_sum):
-        p = len(queens)
-        if p == n:
-            ans.append(queens)
-        for q in range(n):
-            if q not in queens and p - q not in xy_dif and p + q not in xy_sum:
-                DFS(queens + [q], xy_dif + [p - q], xy_sum + [q + p])
 
-    DFS([], [], [])
-    return [['.' * i + 'Q' + '.' * (n - i - 1) for i in queen] for queen in ans]
+    def dfs(ans, stack, s):
+        if not s:
+            ans.append(stack)
+        for i in range(len(s)):
+            if i == 0 and 0 < int(s[i]) <= 10:
+                dfs(ans, stack + [s[i]], s[i + 1:])
+            if i == 1 and 10 <= int(s[:i + 1]) <= 26:
+                dfs(ans, stack + [s[:i + 1]], s[i + 1:])
 
-solveNQueens(4)
+    dfs(ans, [], s)
+    return len(ans)
+
+
+numDecodings('100')
