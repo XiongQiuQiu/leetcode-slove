@@ -1,22 +1,45 @@
-def numDecodings(s):
+
+def lengthOfLIS(nums):
     """
-    :type s: str
+    :type nums: List[int]
     :rtype: int
     """
-    ans = []
+    size = len(nums)
+    dp = [1] * size
+    for x in range(size):
+        for y in range(x):
+            if nums[x] > nums[y]:
+                dp[x] = max(dp[x],dp[y]+1)
+    return max(dp) if dp else 0
 
+lengthOfLIS([10,9,2,5,3,7,101,18])
+def lenght(nums):
+    size = len(nums)
+    dp = [1] * size
+    for x in range(size):
+        for y in range(x):
+            if nums[x] > nums[y]:
+                dp[x] = max(dp[x] ,dp[y]+1)
+    return max(dp) if dp else 0
 
-    def dfs(ans, stack, s):
-        if not s:
-            ans.append(stack)
-        for i in range(len(s)):
-            if i == 0 and 0 < int(s[i]) <= 10:
-                dfs(ans, stack + [s[i]], s[i + 1:])
-            if i == 1 and 10 <= int(s[:i + 1]) <= 26:
-                dfs(ans, stack + [s[:i + 1]], s[i + 1:])
-
-    dfs(ans, [], s)
-    return len(ans)
-
-
-numDecodings('100')
+def lengthOfLIS1(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    size = len(nums)
+    dp = []
+    for x in range(size):
+        print
+        low, high = 0, len(dp) - 1
+        while low <= high:
+            mid = (low + high) / 2
+            if dp[mid] >= nums[x]:
+                high = mid - 1
+            else:
+                low = mid + 1
+        if low >= len(dp):
+            dp.append(nums[x])
+        else:
+            dp[low] = nums[x]
+    return len(dp)
