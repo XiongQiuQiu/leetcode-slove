@@ -28,6 +28,22 @@ class Solution(object):
         :rtype: bool
         """
         sums = sum(nums)
+        if sums & 1 == 1: return False
+        dp = [True] + [False] * (sums / 2)
+        for num in nums:
+            for i in range(len(dp))[::-1]:
+                dp[i] = dp[i] or (i - num >= 0 and dp[i - num])
+        return dp[-1]
+
+
+
+class Solution(object):
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        sums = sum(nums)
         if sums & 1: return False
         nset = set([0])
         for num in nums:
@@ -67,3 +83,4 @@ class Solution(object):
             for j in reversed(xrange(1, total / 2 + 1)):
                 dp[j] = dp[j] or (j - nums[i - 1] >= 0 and dp[j - nums[i - 1]])
         return dp[-1] and not total % 2
+
