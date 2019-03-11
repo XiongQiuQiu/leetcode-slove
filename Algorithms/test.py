@@ -1,14 +1,15 @@
-def findTargetSumWays(nums, S):
+def coinChange( coins, amount):
     """
-    :type nums: List[int]
-    :type S: int
+    :type coins: List[int]
+    :type amount: int
     :rtype: int
     """
-    sums = sum(nums)
-    if sums < S or (sums + S) & 1 == 1: return 0
-    dp = [1] + [0] * ((sums + S) / 2)
-    for num in nums:
-        for i in range(len(dp))[::-1]:
-            dp[i] = dp[i] + (i >= num and dp[i - num])
+    dp = [0] + [-1] * amount
+    for i in range(1, amount + 1):
+        if dp[i] <0:
+            continue
+        for coin in coins:
+            if i + coin <= amount and (dp[i+coin]<0 or dp[i+coin] >dp[i]+1):
+                dp[i+coin] = dp[i] +1
     return dp[-1]
-findTargetSumWays([1,1,1,1,1],3)
+coinChange([1,2,5],11)
