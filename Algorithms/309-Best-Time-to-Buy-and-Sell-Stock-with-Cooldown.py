@@ -23,3 +23,24 @@ class Solution(object):
             sell=max(sell,cool)
             cool=hold+p
         return max(sell,cool)
+
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        hold,sell,cool = -float('inf'),0,-float('inf')
+        for p in prices:
+            prehold = hold
+            hold=max(hold,sell-p)
+            sell=max(sell,cool)
+            cool=prehold+p
+        return max(sell,cool)
+
+def maxProfit(self, prices):
+    notHold, notHold_cooldown, hold = 0, float('-inf'), float('-inf')
+    for p in prices:
+        hold, notHold, notHold_cooldown = max(hold, notHold - p), max(notHold, notHold_cooldown), hold + p
+    return max(notHold, notHold_cooldown)

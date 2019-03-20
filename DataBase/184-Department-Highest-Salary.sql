@@ -1,5 +1,13 @@
-Create table If Not Exists Employee (Id int, Name varchar(255), Salary int, DepartmentId int);
-Create table If Not Exists Department (Id int, Name varchar(255));
+Create table If Not Exists Employee (
+  Id           int,
+  Name         varchar(255),
+  Salary       int,
+  DepartmentId int
+);
+Create table If Not Exists Department (
+  Id   int,
+  Name varchar(255)
+);
 Truncate table Employee;
 insert into Employee (Id, Name, Salary, DepartmentId) values ('1', 'Joe', '70000', '1');
 insert into Employee (Id, Name, Salary, DepartmentId) values ('2', 'Henry', '80000', '2');
@@ -34,4 +42,14 @@ insert into Department (Id, Name) values ('2', 'Sales');
 -- | IT         | Max      | 90000  |
 -- | Sales      | Henry    | 80000  |
 -- +------------+----------+--------+
-select D.Name as Department, A.Name as Employee ,A.Salary from Employee A ,Department D , (select max(Salary) as Salary, DepartmentId from Employee group by DepartmentId ) as E where A.Salary = E.Salary and E.DepartmentId=A.DepartmentId and A.DepartmentId =D.ID order by A.Salary desc
+select
+  D.Name as Department,
+  A.Name as Employee,
+  A.Salary
+from Employee A, Department D, (select
+                                  max(Salary) as Salary,
+                                  DepartmentId
+                                from Employee
+                                group by DepartmentId) as E
+where A.Salary = E.Salary and E.DepartmentId = A.DepartmentId and A.DepartmentId = D.ID
+order by A.Salary desc

@@ -23,4 +23,16 @@ def reconstructQueue(people):
                 break
     return ans
 
+
+class Solution(object):
+    def reconstructQueue(self, people):
+        """
+        :type people: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        ans = []
+        people = sorted(people,key = lambda x: (-x[0],x[1]))
+        for p in people:
+            ans.insert(p[1],p)
+        return ans
 print reconstructQueue([[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]])
