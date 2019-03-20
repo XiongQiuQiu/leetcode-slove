@@ -39,3 +39,24 @@ class Solution(object):
                 maxlocal[j-1]+profit)
                 maxglobal[i][j] = max(maxglobal[i][j-1],maxlocal[j])
         return maxglobal[k][-1]
+
+class Solution(object):
+    def maxProfit(self, k, prices):
+        """
+        :type k: int
+        :type prices: List[int]
+        :rtype: int
+        """
+        earn = 0
+        if k >= len(prices) // 2:  # loot every increase
+            for i in range(1, len(prices)):
+                if prices[i] > prices[i - 1]:
+                    earn += prices[i] - prices[i - 1]
+            return earn
+
+        dp = [0 for _ in prices]
+        for i in range(k):
+            pre_max = dp[0] - prices[0]
+            for j in range(1, len(prices)):
+                dp[j], pre_max = max(dp[j - 1], prices[j] + pre_max), max(pre_max, dp[j] - prices[j])
+        return dp[-1]

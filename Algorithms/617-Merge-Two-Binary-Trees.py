@@ -22,3 +22,4 @@ class Solution(object):
         t1.left = self.mergeTrees(t1.left, t2.left)
         t1.right = self.mergeTrees(t1.right, t2.right)
         return t1
+
