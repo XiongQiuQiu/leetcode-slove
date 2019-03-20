@@ -17,7 +17,6 @@ def perm(s=''):
     return sl
 
 if __name__ == "__main__":
-    s='Diei'
-    for item in list(permutation(list(s))):
-        pass
+    s='1234'
+    print(perm(s))
         # print ''.join(item)
