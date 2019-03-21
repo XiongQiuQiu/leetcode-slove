@@ -47,3 +47,12 @@ class Solution(object):
         left,right = (self.lowestCommonAncestor(chil,p,q)
                      for chil in (root.left,root.right))
         return root if left and right else left or right
+
+    def lowestCommonAncestor(self, root, p, q):
+        while root:
+            if root.val > p.val and root.val > q.val:
+                root = root.left
+            elif root.val < p.val and root.val < q.val:
+                root = root.right
+            else:
+                return root
